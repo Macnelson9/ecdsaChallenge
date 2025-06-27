@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice ECDSA</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elliptic/6.5.4/elliptic.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="body-container">
+      <header>
+        <h1>ECDSA in practice</h1>
+        <p>
+          This is a practice project for ECDSA. It is not meant to be used in
+          production.
+        </p>
+      </header>
+
+      <main>
+        <section class="signing-section">
+          <h2>Signing</h2>
+          <p>
+            This section allows you to sign a message using ECDSA. Please follow
+            the steps below to sign your message.
+          </p>
+          <form id="signing-form">
+            <button type="submit" id="keyPairBtn">Generate Key Pair</button>
+            <label for="privateKey">Private Key:</label>
+            <div class="key-value" id="privateKey"></div>
+
+            <label for="publicKey">Public Key:</label>
+            <div class="key-value" id="publicKey"></div>
+
+            <button type="submit" id="genAddressBtn">Generate Address</button>
+            <label for="addressField">Address:</label>
+            <div class="key-value" id="addressField"></div>
+          </form>
+          <label for="message">Your Message:</label>
+          <textarea
+            id="message"
+            placeholder="Enter the message you want to sign"
+          ></textarea>
+          <button type="submit" id="signMessage">Sign Message</button>
+          <label>Digital Signature:</label>
+          <div class="output" id="signature">
+            Click "Sign Message" to generate signature
+          </div>
+        </section>
+        <section class="verifying-section">
+          <h2>Verifying</h2>
+          <p>
+            This section allows you to verify a message using ECDSA. Please
+            follow the steps below to verify your message.
+          </p>
+          <form id="verifying-form">
+            <label for="verifyMessage">Message to Verify:</label>
+            <textarea
+              id="verifyMessage"
+              placeholder="Enter the message you want to sign"
+            ></textarea>
+            <label for="signatureInput">Signature:</label>
+            <input
+              type="text"
+              id="signatureInput"
+              name="signatureInput"
+              required
+            />
+            <label for="publicKeyInput">Public Key:</label>
+            <input
+              type="text"
+              id="publicKeyInput"
+              name="publicKeyInput"
+              required
+            />
+          </form>
+          <button type="submit" id="verifySignature">Verify Signature</button>
+          <div class="output" id="verificationResult">
+            Click "Verify Signature" to check the signature
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "elliptic": "^6.6.1",
+    "keccak": "^3.0.4"
+  }
+}

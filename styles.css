@@ -1,0 +1,223 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #333;
+}
+
+.body-container {
+  font-family: 'Courier New', Courier, monospace;
+  color: #fff;
+  margin: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100dvh;
+}
+
+button {
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px 20px;
+  background-color: #a09d9d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid #fff;
+  transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+button:hover {
+  background-color: #8c8a8a;
+  transform: translateY(-5px);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #444;
+  border-radius: 5px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+section {
+  padding: 20px;
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.signing-section,
+.verifying-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.signing-section h2,
+.verifying-section h2 {
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.signing-section p,
+.verifying-section p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.key-value {
+  font-size: 14px;
+  word-break: break-all;
+  color: #2d3748;
+  background: white;
+  padding: 20px 10px;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+}
+
+.signing-section button {
+  width: 30%;
+  margin: 0 auto;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #f8fafc;
+}
+
+textarea {
+  height: 120px;
+}
+
+.output {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 14px;
+  word-break: break-all;
+  min-height: 100px;
+  color: #2d3748;
+  line-height: 1.4;
+}
+
+.verifying-section input {
+  font-size: 14px;
+  min-height: 48px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (min-width: 767px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  main {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+
+  .signing-section button {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 425px) {
+  header {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .signing-section h2,
+  .verifying-section h2 {
+    font-size: 2rem;
+  }
+
+  .signing-section p,
+  .verifying-section p {
+    font-size: 1rem;
+  }
+
+  .signing-section button {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #verifySignature {
+    margin: 10px auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 375px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .signing-section h2,
+  .verifying-section h2 {
+    font-size: 2rem;
+  }
+
+  .signing-section p,
+  .verifying-section p {
+    font-size: 1rem;
+  }
+
+  .signing-section button {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #verifySignature {
+    margin: 10px auto;
+    width: 100%;
+  }
+}
