@@ -1,5 +1,6 @@
 'use strict';
 
+// Initialize the elliptic curve 
 const EC = elliptic.ec;
 
 // Choosing a curve on the EC
