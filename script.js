@@ -1,6 +1,6 @@
 'use strict';
 
-// Initialize the elliptic curve 
+// Initialize the elliptic curve
 const EC = elliptic.ec;
 
 // Choosing a curve on the EC
@@ -26,7 +26,7 @@ const signatureInput = document.getElementById('signatureInput');
 const publicKeyInput = document.getElementById('publicKeyInput');
 const verificationResult = document.getElementById('verificationResult');
 
-// Generate Key Pair
+// Generate Key Pair function
 const genKeyPair = function (e) {
   e.preventDefault();
   keyPair = ec.genKeyPair();
@@ -45,7 +45,7 @@ const genKeyPair = function (e) {
 
 genKeyPairBtn.addEventListener('click', genKeyPair);
 
-// Generate Address
+// Generate Address function
 const genAddress = function (e) {
   e.preventDefault();
 
@@ -56,58 +56,80 @@ const genAddress = function (e) {
 
 genAddressBtn.addEventListener('click', genAddress);
 
-// Sign the message
-const signMessage = function () {
-  const messageVal = message.value;
-  const messageHash = CryptoJS.SHA256(messageVal).toString();
-  console.log(messageHash);
-  verifyMessage.textContent = messageVal;
+// Sign the message function
+const signMessage = function (e) {
+  try {
+    e.preventDefault();
 
-  const signature = keyPair.sign(messageHash);
-  console.log(signature);
+    const messageVal = message.value;
+    if (!messageVal) alert('Please enter a message to sign');
 
-  const signatureHex = signature.toDER('hex');
-  console.log(signatureHex);
+    // Hash the message
+    const messageHash = CryptoJS.SHA256(messageVal).toString();
 
-  signedSignature.textContent = signatureHex;
-  signatureInput.value = signatureHex;
-  publicKeyInput.value = publicKey.textContent;
+    verifyMessage.textContent = messageVal;
 
-  const signedTransaction = {
-    data: messageVal,
-    signature: signatureHex,
-  };
-  console.log(signedTransaction);
+    // Sign the message hash with private key + ECDSA
+    const signature = keyPair.sign(messageHash);
 
-  return messageVal, messageHash, signatureHex, signedTransaction;
+    // Providing the signature in hexadecimal
+    const signatureHex = signature.toDER('hex');
+
+    signedSignature.textContent = signatureHex;
+    signatureInput.value = signatureHex;
+    publicKeyInput.value = publicKey.textContent;
+
+    // Creating the signed transaction object to be sent for verification
+    const signedTransaction = {
+      data: messageVal,
+      signature: signatureHex,
+    };
+
+    return messageVal, messageHash, signatureHex, signedTransaction;
+  } catch (err) {
+    alert(`Sorry, ${err} error has occurred. Please fill in the fields`);
+  }
 };
 
 signMessageBtn.addEventListener('click', signMessage);
 
-// Verify the message
+// Verify the message function
 const verifySignedMessage = function (e) {
-  e.preventDefault();
+  try {
+    e.preventDefault();
 
-  const verifyMessageVal = verifyMessage.textContent;
-  const verifyMessageHash = CryptoJS.SHA256(verifyMessageVal).toString();
+    // Check for empty fields
+    if (
+      !verifyMessage.textContent ||
+      !signatureInput.value ||
+      !publicKeyInput.value
+    ) {
+      alert('Please fill in all fields before verifying the signature.');
+      verificationResult.textContent = 'Signature Not Verified!';
+      return;
+    }
 
-  // Derive public key
-  const DerivedPublicKey = ec.keyFromPublic(publicKeyInput.value, 'hex');
-  console.log(DerivedPublicKey);
+    const verifyMessageVal = verifyMessage.textContent;
 
-  const verifyDigitalSignature = DerivedPublicKey.verify(
-    verifyMessageHash,
-    signedSignature.textContent
-  );
+    // Reconstructed Message Hash
+    const verifyMessageHash = CryptoJS.SHA256(verifyMessageVal).toString();
 
-  console.log(verifyDigitalSignature);
+    // Derive public key
+    const DerivedPublicKey = ec.keyFromPublic(publicKeyInput.value, 'hex');
 
-  if (verifyDigitalSignature === true) {
-    console.log('It is a match!!!');
-    verificationResult.textContent = 'Signature Verified Successfully!!';
-  } else {
-    console.log('It is NOT a match!!!');
-    verificationResult.textContent = 'Signature Not Verified!!';
+    // Verify Digital Signature
+    const verifyDigitalSignature = DerivedPublicKey.verify(
+      verifyMessageHash,
+      signedSignature.textContent
+    );
+
+    if (verifyDigitalSignature === true) {
+      verificationResult.textContent = 'Signature Verified Successfully!!';
+    } else {
+      verificationResult.textContent = 'Signature Not Verified!!';
+    }
+  } catch (err) {
+    alert(`An ${err} has occurred.`);
   }
 };
 
